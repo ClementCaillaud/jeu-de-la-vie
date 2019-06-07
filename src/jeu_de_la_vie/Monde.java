@@ -184,4 +184,14 @@ public class Monde extends JPanel implements Runnable
 			}
 		}
 	}
+	
+	public int get_largeur()
+	{
+		return largeur;
+	}
+	
+	public int get_hauteur()
+	{
+		return hauteur;
+	}
 }

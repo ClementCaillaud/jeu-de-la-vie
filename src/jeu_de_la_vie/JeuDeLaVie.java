@@ -18,9 +18,10 @@ public class JeuDeLaVie
 		GrainePulsar gp = new GrainePulsar();
 		
 		//Ajout de structures dans le monde
-		gp.ajouter(monde, 55, 50);
-		cp.ajouter(monde, 4, 10);
+		gp.ajouter(monde, 55, 20);
+		cp.ajouter(monde, 5, 10);
 		p.ajouter(monde, 40, 40);
+		gp.ajouter(monde, 60, 45);
 		
 		//Création de la fenêtre
 		SwingUtilities.invokeLater(new Runnable()
