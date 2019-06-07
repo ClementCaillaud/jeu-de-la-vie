@@ -1,10 +1,10 @@
-package jeu_de_la_vie;
+package structures;
 
-import structures.Structure;
+import jeu_de_la_vie.Monde;
 
 public class GrainePulsar implements Structure
 {
-
+	
 	@Override
 	public void ajouter(Monde monde, int x, int y)
 	{

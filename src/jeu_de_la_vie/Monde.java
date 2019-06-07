@@ -6,11 +6,17 @@ import javax.swing.JPanel;
 
 public class Monde extends JPanel implements Runnable
 {
+	private static final long serialVersionUID = -2318077517510272794L;
 	private int largeur;
 	private int hauteur;
 	private boolean grille[][];
 	private int nbIterations;
 	
+	/**
+	 * Constructeur du monde
+	 * @param largeur Nombre de colonnes
+	 * @param hauteur Nombre de lignes
+	 */
 	public Monde(int largeur, int hauteur)
 	{
 		this.largeur = largeur;
@@ -19,20 +25,34 @@ public class Monde extends JPanel implements Runnable
 		nbIterations = 0;
 	}
 	
+	/**
+	 * Fait naitre une cellule à l'emplacement donné
+	 * @param positionX Colonne
+	 * @param positionY Ligne
+	 */
 	public void naissance(int positionX, int positionY)
 	{
 		grille[positionY][positionX] = true;
 	}
 	
+	/**
+	 * Fait mourir une cellule à l'emplacement donné
+	 * @param positionX Colonne
+	 * @param positionY Ligne
+	 */
 	public void mort(int positionX, int positionY)
 	{
 		grille[positionY][positionX] = false;
 	}
 	
+	/**
+	 * Fais évoluer la grille
+	 */
 	public void evolution()
 	{
 		boolean futurMonde[][] = new boolean[largeur][hauteur];
 		
+		//Rempli le futur monde avec le prochain état de chaque cellule
 		for (int y = 0; y < hauteur; y++)
 		{
 			for (int x = 0; x < largeur; x++)
@@ -43,8 +63,15 @@ public class Monde extends JPanel implements Runnable
 		grille = futurMonde;
 	}
 	
+	/**
+	 * Détermine le futur état d'une cellule
+	 * @param x Colonne
+	 * @param y Ligne
+	 * @return boolean Le futur état
+	 */
 	private boolean futur_etat(int x, int y)
 	{
+		//Trouver tous les voisins de la cellule
 		boolean voisins[] = {
 			(y-1 >= 0) 							? grille[y-1][x] 	: false,//haut
 			(y-1 >= 0 && x+1 < largeur) 		? grille[y-1][x+1] 	: false,//haut droite
@@ -57,7 +84,7 @@ public class Monde extends JPanel implements Runnable
 		};
 		
 		int nbVoisinsVivants = 0;
-		
+		//Compter le nombre de voisins vivants
 		for (boolean etatVoisin : voisins)
 		{
 			if(etatVoisin)
@@ -66,23 +93,29 @@ public class Monde extends JPanel implements Runnable
 			}
 		}
 		
+		//Si la cellule est vivante
 		if(grille[y][x])
 		{
+			//Si elle a 2 ou 3 voisins vivants elle vit
 			if(nbVoisinsVivants == 2 || nbVoisinsVivants == 3)
 			{
 				return true;
 			}
+			//Sinon elle meurt
 			else
 			{
 				return false;
 			}
 		}
+		//Sinon si la cellule est vivante
 		else
 		{
+			//Si elle a 3 voisins vivants elle nait
 			if(nbVoisinsVivants == 3)
 			{
 				return true;
 			}
+			//Sinon elle reste morte
 			else
 			{
 				return false;
@@ -108,17 +141,19 @@ public class Monde extends JPanel implements Runnable
 	@Override
 	public void paintComponent(Graphics g)
 	{
-		// TODO Auto-generated method stub
 		super.paintComponent(g);
 		
+		//Affichage de la grille
 		for (int y = 0; y < hauteur; y++)
 		{
 			for (int x = 0; x < largeur; x++)
 			{
+				//Si la cellule est vivante on l'affiche en gris
 				if(grille[y][x])
 				{
 					g.setColor(Color.GRAY);
 				}
+				//Sinon on l'affiche en blanc
 				else
 				{
 					g.setColor(Color.WHITE);
@@ -126,6 +161,7 @@ public class Monde extends JPanel implements Runnable
 				g.fillOval(x*10, y*10, 10, 10);
 			}
 		}
+		//Affichage du nombre d'itérations de la simulation
 		g.setColor(Color.BLACK);
 		g.drawString(""+nbIterations, 20, 20);
 	}
@@ -137,10 +173,10 @@ public class Monde extends JPanel implements Runnable
 		{	
 			try 
 			{
-				nbIterations++;
-				evolution();
-				repaint();
-				Thread.sleep(50);
+				nbIterations++;//On incrémente le nombre d'itérations
+				evolution();//On fait évoluer la simulation
+				repaint();//On redessine la fenêtre
+				Thread.sleep(50);//On temporise
 			} 
 			catch (InterruptedException e) 
 			{

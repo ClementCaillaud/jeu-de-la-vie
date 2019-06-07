@@ -4,10 +4,6 @@ import jeu_de_la_vie.Monde;
 
 public class CanonPlanneur implements Structure
 {
-	public CanonPlanneur()
-	{
-		
-	}
 	
 	@Override
 	public void ajouter(Monde monde, int x, int y)

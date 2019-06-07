@@ -4,11 +4,6 @@ import jeu_de_la_vie.Monde;
 
 public class Planneur implements Structure
 {
-	public Planneur()
-	{
-		
-	}
-
 	@Override
 	public void ajouter(Monde monde, int x, int y)
 	{
